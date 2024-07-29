@@ -1,10 +1,8 @@
 package Modelo;
 
 import Controlador.Facultad;
-import Controlador.Fechas;
 import Controlador.Postulante;
 import Controlador.Usuario_administrativo;
-import java.awt.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

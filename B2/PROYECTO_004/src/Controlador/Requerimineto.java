@@ -21,10 +21,13 @@ public class Requerimineto {
         String[] fechasArray = g.listaFechas();
 
         try {
+            //se importa el formato
             Date fechaAComparar = dateFormat.parse(fecha);
+            //se recorre el arreglo
             for (int i = 0; i < fechasArray.length; i += 2) {
                 Date fechaInicio = dateFormat.parse(fechasArray[i]);
                 Date fechaFinal = dateFormat.parse(fechasArray[i + 1]);
+                
                 if (fechaAComparar.compareTo(fechaInicio) >= 0 && fechaAComparar.compareTo(fechaFinal) <= 0) {
                     return true;
                 }
@@ -32,7 +35,7 @@ public class Requerimineto {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return true;//le cambio para probar
+        return false;
     }
 
     public int examen(String carrera, String discapacidad, String bachillerato, String abanderado) {
@@ -46,6 +49,7 @@ public class Requerimineto {
         }
 
         switch (bachillerato) {
+            //aqui se busca cuantos puntos se ganaron escogiendo la acrrea
             case "B.I":
                 nota += obtenerNotaPorCarrera(g.listFacuExactas(), carrera);
                 nota += obtenerNotaPorCarrera(g.listFacuIngenierias(), carrera);
@@ -78,7 +82,7 @@ public class Requerimineto {
         // Asegurarse de que la nota no sea mayor a 10
         if (nota > 10) {
             int x = random.nextInt(6) + 1;
-            nota = 10 - 9;//-x;
+            nota = 10;
         }
 
         return nota;
@@ -93,27 +97,25 @@ public class Requerimineto {
         return 0;
     }
 
-public String mensaje(String carrera, int nota) {
-    ArrayList<Facultad> facultades = g.list_No_Diagnostico();
+    public String mensaje(String carrera, int nota) {
+        ArrayList<Facultad> facultades = g.list_No_Diagnostico();
 
-    // Buscar la carrera en la lista de facultades
-    for (Facultad f : facultades) {
-        if (carrera.equals(f.carrera)) {
-            // Verificar la nota
-            if (nota < 3) {
-                return "Usted debe aprobar el curso 0";
-            } else if (nota > 7) {
-                return "Usted está aprobado";
-            } else {
-                return "Usted está reprobado";
+        // Buscar la carrera en la lista de facultades
+        for (Facultad f : facultades) {
+            if (carrera.equals(f.carrera)) {
+                // Verificar la nota
+                if (nota < 0.3) {
+                    return "Usted debe aprobar el curso 0";
+                } else  {
+                    return "Usted está aprobado";
+                }
             }
-        }
-    }
-    
-    // Si la carrera no está en la lista
-    return "Carrera no encontrada";
-}
 
+        }
+
+        // Si la carrera no está en la lista
+        return "Carrera no encontrada";
+    }
 
     public boolean estado(int nota, String carrera) {
         ArrayList<Facultad> c = new ArrayList<>();

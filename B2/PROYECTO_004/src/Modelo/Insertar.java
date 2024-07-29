@@ -22,7 +22,7 @@ public class Insertar {
             conn = conexion.getConnection();
             if (conn != null) {
                 conn.setAutoCommit(false);  // Inicia la transacción
-                String query = "INSERT INTO postulantes (nombre, fecha, bachillerato, abanderado, discapacidad, carrera, usuario, contraseña, nota, estado, mensaje) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                String query = "INSERT INTO postulantes (nombre, fecha, bachillerato, abanderado, discapacidad, carrera, usuario, contraseña, nota, estado, mensaje) ";
                 ps = conn.prepareStatement(query);
                 ps.setString(1, p.nombre);
                 ps.setString(2, p.fecha);
