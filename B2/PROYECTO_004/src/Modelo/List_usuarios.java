@@ -2,7 +2,6 @@ package Modelo;
 
 import Controlador.Postulante;
 import Controlador.Usuario_administrativo;
-import Controlador.Facultad;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -115,57 +114,5 @@ public class List_usuarios {
         }
          //esta lista la debo enviar a Gestion_usuario para que se la pueda utlizar en el metodo verificador
         return listaUsuarios;
-    }
-    private ArrayList<Facultad> listarCarreras(String tablaFacultad) {
-        ArrayList<Facultad> facultades = new ArrayList<>();
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            conn = DriverManager.getConnection("jdbc:sqlite:bd/nombre_bd.db");
-            String sql = "SELECT carrera FROM " + tablaFacultad;
-            ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                String carrera = rs.getString("carrera");
-                Facultad facultad = new Facultad(carrera);
-                facultades.add(facultad);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return facultades;
-    }
-
-    public ArrayList<Facultad> listFacuSalud() {
-        return listarCarreras("CIENCIAS_DE_LA_SALUD");
-    }
-
-    public ArrayList<Facultad> listFacuEconomicas() {
-        return listarCarreras("CIENCIAS_ECONOMICAS_Y_EMPRESARIALES");
-    }
-
-    public ArrayList<Facultad> listFacuExactas() {
-        return listarCarreras("CIENCIAS_EXACTAS_Y_NATURALES");
-    }
-
-    public ArrayList<Facultad> listFacuSociales() {
-        return listarCarreras("CIENCIAS_SOCIALES_EDUCACION_Y_HUMANIDADES");
-    }
-
-    public ArrayList<Facultad> listFacuJuridicas() {
-        return listarCarreras("CIENCIAS_JURIDICAS_Y_POLITICAS");
-    }
-
-    public ArrayList<Facultad> listFacuIngenierias() {
-        return listarCarreras("INGENIERIAS_Y_ARQUITECTURAS");
     }
 }

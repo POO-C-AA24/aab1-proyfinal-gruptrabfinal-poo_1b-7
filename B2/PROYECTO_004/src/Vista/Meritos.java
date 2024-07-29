@@ -8,7 +8,7 @@ import Controlador.Gestion_contraseñas;
 import Controlador.Gestion_postulante;
 import Controlador.Gestion_emails;
 import Controlador.Procesar_opciones;
-import Controlador.Requerimineto;
+import Controlador.obtener_id;
 import Modelo.obtener_identifi;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -875,15 +875,15 @@ public class Meritos extends javax.swing.JFrame {
 
     private void enfermeria1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enfermeria1ActionPerformed
         Procesar_opciones manejarcheckbox = new Procesar_opciones(dietetica, enfermeria1, fisioterapia1, dietetica, administracion_empresas, contabilidad_auditoria, economia, finanzas, gastronomia, alimentos, biologia, ambiental, industrial, quimica, bio_farmacia, agropecuaria, escenicas, visulaes, idiomas, psicologia, psicopedadogia, psico_clinica, derecho, computacion, geologia, telecomunicaciones, arquitectura, civil);
-        enfermeria1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                manejarcheckbox.preparar_opciones(enfermeria1);
-            }
-        });
-        manejarcheckbox.preparar_opciones(enfermeria1);
-        this.carrera = enfermeria1.getText();
-        System.out.println(carrera);
+    enfermeria1.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            manejarcheckbox.preparar_opciones(enfermeria1);
+        }
+    });
+    manejarcheckbox.preparar_opciones(enfermeria1);
+    this.carrera = enfermeria1.getText();
+    System.out.println(carrera);
     }//GEN-LAST:event_enfermeria1ActionPerformed
 
     private void fisioterapia1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fisioterapia1ActionPerformed
@@ -1240,19 +1240,16 @@ public class Meritos extends javax.swing.JFrame {
     }//GEN-LAST:event_civilActionPerformed
 
     private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
-        Requerimineto n = new Requerimineto();
+ String nombre_postulante = nombre_postu.getText();
+    LocalDate fechaActual = LocalDate.now();
+    DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    String fecha = fechaActual.format(formato);
 
-        String nombre_postulante = nombre_postu.getText();
-        LocalDate fechaActual = LocalDate.now();
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String fecha = fechaActual.format(formato);
-        boolean vf = n.verifi_fechas(fecha);
-        if(vf){
-        String usuario;
+    String usuario;
     String contraseña;
-    
+
     obtener_identifi o = new obtener_identifi();
-    int id = o.obtenerSiguienteNumeroDeFila(); 
+    int id = o.obtenerSiguienteNumeroDeFila(); // Usa el método correcto
 
     Gestion_emails gestionUsuarios = new Gestion_emails();
     usuario = gestionUsuarios.creador_usuarios(id);
@@ -1261,24 +1258,16 @@ public class Meritos extends javax.swing.JFrame {
     contraseña = gestionContraseñas.creador_contraseñas();
 
     System.out.println(nombre_postulante);
-   
-    int nota = n.examen(carrera, discapacidad, bachillerato, abanderado);
-    String mesj = n.mensaje(carrera, nota);
-    boolean estado = n.estado(nota, carrera);
-    Gestion_postulante postulante = new Gestion_postulante(nombre_postulante, fecha, bachillerato, abanderado, discapacidad, carrera, usuario, contraseña, nota, estado, mesj);
+
+    Gestion_postulante postulante = new Gestion_postulante(nombre_postulante, fecha, bachillerato, abanderado, discapacidad, carrera, usuario, contraseña, 0, false, "");
     postulante.guardar_bd();
 
     JOptionPane.showMessageDialog(this, "Usuario: " + usuario + "\nContraseña: " + contraseña, "Guarde la suiguiente información", JOptionPane.INFORMATION_MESSAGE);
     new Iniciar_secion().setVisible(true);
-        }else{
-        JOptionPane.showMessageDialog(rootPane, "se encuentra fuera del tiempo permitido, intente el proximio año");
-        }
-
-
     }//GEN-LAST:event_jLabel4MousePressed
 
     private void nombre_postuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nombre_postuMousePressed
-        if (nombre_postu.getText().equals("Ingrese su nombre y su apellido")) {
+               if (nombre_postu.getText().equals("Ingrese su nombre y su apellido")) {
             nombre_postu.setText("");
             nombre_postu.setForeground(Color.black);
         }

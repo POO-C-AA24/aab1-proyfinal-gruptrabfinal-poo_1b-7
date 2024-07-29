@@ -1,6 +1,9 @@
 package Controlador;
 
-
+/**
+ *
+ * @author COSAS DE LA Y
+ */
 public class Gestion_contraseñas extends Seguridad {
 
     @Override
